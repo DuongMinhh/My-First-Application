@@ -10,8 +10,10 @@ import com.me.common.entity.Admin;
 public interface AdminMapper {
 
 	@Mapping(target = "role", ignore = true)
+	@Mapping(target = "userInformation", ignore = true)
 	Admin dtoToEntity(AdminDto admin);
 	
 	@Mapping(target = "role", ignore = true)
+	@Mapping(target = "userInformation", ignore = true)
 	AdminDto entityToDto(Admin admin);
 }

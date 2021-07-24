@@ -17,9 +17,11 @@ import com.me.common.entity.Seller;
 public interface SellerMapper extends ProductMapper {
 	
 	@Mapping(target = "balance", ignore = true)
+	@Mapping(target = "userInformation", ignore = true)
 	Seller dtoToEntity(SellerDto seller);
 	
 	@Mapping(target = "balance", ignore = true)
+	@Mapping(target = "userInformation", ignore = true)
 	SellerDto entityToDto(Seller seller);
 	
 	default List<Product> listProductDtoToEntity(List<ProductDto> listProduct) {

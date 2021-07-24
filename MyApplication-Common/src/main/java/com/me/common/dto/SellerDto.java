@@ -36,16 +36,6 @@ public class SellerDto extends BaseDto implements Serializable {
 	@Size(max = 256, message = "Address max size is 256")
 	private String address;
 
-//	@Size(max = 100, message = "Email max size is 100")
-//	private String email;
-//
-//	@Size(max = 20, message = "Phone number max size is 20")
-//	private String phoneNumber;
-//
-//	@Size(min = 6, max = 20, message = "The size of password have to between 6 - 20 characters")
-//	@NotBlank(message = "Password is not blank")
-//	private String password;
-
 	private Long userInformationId;
 
 	private UserInformationDto userInformation;
