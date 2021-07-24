@@ -1,31 +1,28 @@
-package com.me.common.entity;
+package com.me.common.dto;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "role")
-public class Role implements Serializable {
+@Builder
+public class RoleDto extends BaseDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	private Integer id;
-	
-	@Column(name = "name", columnDefinition = "varchar(30)", nullable = false)
+
+	@Size(max = 30, message = "Name max size is 30")
 	private String name;
-	
 }
