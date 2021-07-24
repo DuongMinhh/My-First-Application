@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	<Properties>
+		<Property name="log-path">F:/logs</Property>
+	</Properties>
+	<Appenders>
+		<!-- Log to file -->
+		<RollingFile name="fileLogger"
+			fileName="${log-path}/MyApplication.log"
+			filePattern="${log-path}/MockMVC-%d{yyyy-MM-dd}.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+				</pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+		</RollingFile>
+
+		<!-- Log to console -->
+		<Console name="consoleLogger" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="[%-5level] %d{yyyy-MM-dd HH:mm} - %c{1} - %msg%n" />
+		</Console>
+	</Appenders>
+	<Loggers>
+		<Root level="info">
+			<appender-ref ref="fileLogger" />
+			<appender-ref ref="consoleLogger" />
+		</Root>
+	</Loggers>
+</Configuration>

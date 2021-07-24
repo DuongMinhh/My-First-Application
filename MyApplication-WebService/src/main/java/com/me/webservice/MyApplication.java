@@ -27,6 +27,8 @@ public class MyApplication {
 
 	@Autowired
 	private void onStartUp(RoleRepository roleRepo) {
+		
+		// Create roles for app
 		Role roleAdmin = new Role(RoleEnum.ROLE_ADMIN.value, RoleEnum.ROLE_ADMIN.toString());
 		Role roleSeller = new Role(RoleEnum.ROLE_SELLER.value, RoleEnum.ROLE_SELLER.toString());
 		Role roleCustomer = new Role(RoleEnum.ROLE_CUSTOMER.value, RoleEnum.ROLE_CUSTOMER.toString());

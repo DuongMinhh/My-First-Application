@@ -2,6 +2,7 @@ package com.me.common.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import com.me.common.enums.RoleEnum;
 
@@ -26,7 +26,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "customer", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = {"email", "phone_number"}))
+@Table(name = "customer", schema = "public")
 public class Customer extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -44,14 +44,12 @@ public class Customer extends BaseEntity implements Serializable {
 	@Column(name = "address", columnDefinition = "varchar(256)")
 	private String address;
 	
-	@Column(name = "email", columnDefinition = "varchar(100)")
-	private String email;
+	@Column(name = "user_information_id")
+	private Long userInformationId;
 	
-	@Column(name = "phone_number", columnDefinition = "varchar(20)")
-	private String phoneNumber;
-	
-	@Column(name = "password", columnDefinition = "varchar(256)", nullable = false)
-	private String password;
+	@OneToOne(cascade = {CascadeType.ALL})
+	@JoinColumn(name = "user_information_id", insertable = false, updatable = false)
+	private UserInformation userInformation;
 	
 	@Column(name = "balance_id")
 	private Long balanceId;
