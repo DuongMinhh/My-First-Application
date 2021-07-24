@@ -1,4 +1,4 @@
-package com.me.entity;
+package com.me.common.entity;
 
 import java.io.Serializable;
 
@@ -16,13 +16,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "category", schema = "public")
-public class Category extends BaseEntity implements Serializable {
+@Table(name = "order_details", schema = "public")
+public class OrderDetails extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,17 +30,18 @@ public class Category extends BaseEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "name", columnDefinition = "varchar(100)", nullable = false)
-	private String name;
-	
-	@Column(name = "description", columnDefinition = "varchar(256)")
-	private String description;
-	
-	@Column(name = "parent_category_id")
-	private Long parentCategoryId;
+	@Column(name = "order_id")
+	private Long orderId;
 	
 	@ManyToOne
-	@JoinColumn(name = "parent_category_id", insertable = false, updatable = false)
-	private Category category;
+	@JoinColumn(name = "order_id", insertable = false, updatable = false)
+	private Order order;
+	
+	@Column(name = "product_id")
+	private Long productId;
+	
+	@ManyToOne
+	@JoinColumn(name = "product_id", insertable = false, updatable = false)
+	private Product product;
 	
 }

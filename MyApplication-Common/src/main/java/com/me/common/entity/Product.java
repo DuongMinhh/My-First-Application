@@ -1,4 +1,4 @@
-package com.me.entity;
+package com.me.common.entity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -50,11 +50,11 @@ public class Product extends BaseEntity implements Serializable {
 	@Column(name = "description", columnDefinition = "varchar(256)")
 	private String description;
 	
-	@Column(name = "parent_category_id")
-	private Long parentCategoryId;
+	@Column(name = "category_id")
+	private Long categoryId;
 	
 	@ManyToOne
-	@JoinColumn(name = "parent_category_id", insertable = false, updatable = false)
+	@JoinColumn(name = "category_id", insertable = false, updatable = false)
 	private Category category;
 	
 	@Column(name = "price")

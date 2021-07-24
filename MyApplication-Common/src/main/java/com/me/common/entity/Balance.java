@@ -1,4 +1,4 @@
-package com.me.entity;
+package com.me.common.entity;
 
 import java.io.Serializable;
 
@@ -14,21 +14,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "image_storage", schema = "public")
-public class ImageStorage extends BaseEntity implements Serializable {
+@Table(name = "balance", schema = "public")
+public class Balance extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "local_path", columnDefinition = "varchar(256)")
-	private String localPath;
-	
+	@Column(name = "account_balance")
+	private Double accountBalance;
+
 }

@@ -1,6 +1,7 @@
-package com.me.entity;
+package com.me.common.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,9 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import com.me.common.enums.RoleEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,8 +28,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "customer", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = {"email", "phone_number"}))
-public class Customer extends BaseEntity implements Serializable {
+@Table(name = "seller", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = {"email", "phone_number"}))
+public class Seller extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -31,11 +37,11 @@ public class Customer extends BaseEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "first_name", columnDefinition = "varchar(50)", nullable = false)
-	private String firstName;
+	@Column(name = "name", columnDefinition = "varchar(100)", nullable = false)
+	private String name;
 	
-	@Column(name = "last_name", columnDefinition = "varchar(50)", nullable = false)
-	private String lastName;
+	@Column(name = "introduction", columnDefinition = "varchar(2048)")
+	private String introduction;
 	
 	@Column(name = "address", columnDefinition = "varchar(256)")
 	private String address;
@@ -46,14 +52,29 @@ public class Customer extends BaseEntity implements Serializable {
 	@Column(name = "phone_number", columnDefinition = "varchar(20)")
 	private String phoneNumber;
 	
-	@Column(name = "password", columnDefinition = "varchar(20)", nullable = false)
+	@Column(name = "password", columnDefinition = "varchar(256)", nullable = false)
 	private String password;
 	
+	@OneToMany(mappedBy = "seller")
+	private List<Product> listProduct;
+
 	@Column(name = "balance_id")
 	private Long balanceId;
 	
 	@OneToOne
 	@JoinColumn(name = "balance_id", insertable = false, updatable = false)
 	private Balance balance;
-
+	
+	@Column(name = "role_id", nullable = false)
+	private Integer roleId;
+	
+	@ManyToOne
+	@JoinColumn(name = "role_id", insertable = false, updatable = false)
+	private Role role;
+	
+	@PrePersist
+	public void prePersist() {
+		this.roleId = RoleEnum.ROLE_SELLER.value;
+	}
+	
 }
