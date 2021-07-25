@@ -20,7 +20,7 @@ public class CustomUserService implements UserDetailsService {
 
 		// User from DB
 		UserInformation user = userInformationRepository.findByUsernameOrEmailOrPhoneNumber(loginInfo, loginInfo, loginInfo).orElseThrow(() -> {
-			throw new UsernameNotFoundException("User not found");
+			throw new UsernameNotFoundException("User not found!");
 		});
 		
 		if (!user.getIsEnable()) throw new UsernameNotFoundException("User is locked!");

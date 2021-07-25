@@ -1,5 +1,7 @@
 package com.me.common.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,8 +23,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "user_information", schema = "public")
-public class UserInformation {
+public class UserInformation extends BaseEntity implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

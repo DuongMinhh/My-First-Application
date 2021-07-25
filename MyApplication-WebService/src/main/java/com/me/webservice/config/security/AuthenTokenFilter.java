@@ -28,19 +28,13 @@ public class AuthenTokenFilter extends OncePerRequestFilter {
 	public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 
-		// Trekkin method and url
-		log.info(request.getMethod());
-		log.info(request.getRequestURI());
-
 		// No need check jwt
 		if (WebSecurityConfig.EXCLUSION_URL_MATCHER.matches(request)) {
-			log.info("===========================Bypass filer=========================\n");
 			filterChain.doFilter(request, response);
 		}
 
 		// Check jwt
 		else {
-			log.info("===========================Start filter=========================\n");
 			try {
 				String jwtToken = request.getHeader(HEADER_STRING).replace("Bearer", "").trim();
 				if ((jwtToken != null) && (jwtUtil.validateJwt(jwtToken))) {
@@ -48,16 +42,17 @@ public class AuthenTokenFilter extends OncePerRequestFilter {
 
 					UserDetails userDetails = userService.loadUserByUsername(username);
 
-					UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails,
-							null, userDetails.getAuthorities());
-					log.info("========================Finishing filter========================\n");
-					SecurityContextHolder.getContext().setAuthentication(token);
+					UsernamePasswordAuthenticationToken authenticatedObject = new UsernamePasswordAuthenticationToken(
+							userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
+
+					SecurityContextHolder.getContext().setAuthentication(authenticatedObject);
 					filterChain.doFilter(request, response);
 				} else {
-					log.info("Jwt token is null or cannot pass the validation");
+					response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: Unauthorized");
 				}
 			} catch (Exception e) {
 				log.error(e.getMessage());
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: Unauthorized");
 			}
 		}
 	}
