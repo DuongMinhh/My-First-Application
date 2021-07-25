@@ -17,15 +17,13 @@ public class CustomUserDetails implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
-	private String phoneNumber;
-	private String email;
+	private String username;
 	private String password;
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public CustomUserDetails(String phoneNumber, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+	public CustomUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
 		super();
-		this.phoneNumber = phoneNumber;
-		this.email = email;
+		this.username = username;
 		this.password = password;
 		this.authorities = authorities;
 	}
@@ -36,7 +34,7 @@ public class CustomUserDetails implements UserDetails {
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		authorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
 
-		return new CustomUserDetails(user.getPhoneNumber(), user.getEmail(), user.getPassword(), authorities);
+		return new CustomUserDetails(user.getUsername(), user.getPassword(), authorities);
 	}
 
 	@Override
@@ -51,7 +49,7 @@ public class CustomUserDetails implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return "Phone: " + this.phoneNumber + " - Email: " + this.email; 
+		return this.username;
 	}
 
 	@Override

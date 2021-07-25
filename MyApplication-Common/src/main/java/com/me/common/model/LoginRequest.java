@@ -11,8 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class LoginRequest {
 
-	@NotBlank(message = "Phone or email is not blank")
-	private String phoneOrEmail;
+	@NotBlank(message = "Login info is not blank")
+	private String loginInfo;
 	@NotBlank(message = "Password is not blank")
 	private String password;
 }

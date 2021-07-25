@@ -39,7 +39,7 @@ public class CommonController {
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 		try {
 
-			Authentication rawAuthenObject = new UsernamePasswordAuthenticationToken(loginRequest.getPhoneOrEmail(),
+			Authentication rawAuthenObject = new UsernamePasswordAuthenticationToken(loginRequest.getLoginInfo(),
 					loginRequest.getPassword());
 			Authentication resultAuthenObject = authenticationManager.authenticate(rawAuthenObject);
 

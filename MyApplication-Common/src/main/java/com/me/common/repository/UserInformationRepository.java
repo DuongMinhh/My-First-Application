@@ -10,5 +10,7 @@ import com.me.common.entity.UserInformation;
 @Repository
 public interface UserInformationRepository extends JpaRepository<UserInformation, Long> {
 
-	Optional<UserInformation> findByEmailOrPhoneNumber(String email, String phoneNumber);
+	Optional<UserInformation> findByUsernameOrEmailOrPhoneNumber(String username, String email, String phoneNumber);
+	
+	Optional<UserInformation> findByUsername(String username);
 }

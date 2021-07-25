@@ -9,10 +9,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.me.common.entity.Role;
+import com.me.common.entity.UserInformation;
 import com.me.common.enums.RoleEnum;
 import com.me.common.repository.RoleRepository;
+import com.me.common.repository.UserInformationRepository;
 
 
 @SpringBootApplication
@@ -26,7 +29,7 @@ public class MyApplication {
 	}
 
 	@Autowired
-	private void onStartUp(RoleRepository roleRepo) {
+	private void onStartUp(UserInformationRepository userRepo, RoleRepository roleRepo, PasswordEncoder passwordEncoder) {
 		
 		// Create roles for app
 		Role roleAdmin = new Role(RoleEnum.ROLE_ADMIN.value, RoleEnum.ROLE_ADMIN.toString());
@@ -40,6 +43,18 @@ public class MyApplication {
 				roleRepo.save(r);
 			}
 		});
+		
+		// Create system admin
+		if (!userRepo.findByUsername("admin").isPresent()) {
+			UserInformation adminInformation = new UserInformation();
+			adminInformation.setUsername("admin");
+			adminInformation.setEmail("nguyenminhduong2310@gmail.com");
+			adminInformation.setPhoneNumber("0978240409");
+			adminInformation.setPassword(passwordEncoder.encode("123456"));
+			adminInformation.setRoleId(RoleEnum.ROLE_ADMIN.value);
+			
+			userRepo.save(adminInformation);
+		}
 	}
 
 }

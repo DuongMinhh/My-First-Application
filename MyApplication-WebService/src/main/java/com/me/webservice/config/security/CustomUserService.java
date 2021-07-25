@@ -16,10 +16,10 @@ public class CustomUserService implements UserDetailsService {
 	private UserInformationRepository userInformationRepository;
 
 	@Override
-	public UserDetails loadUserByUsername(String phoneOrEmail) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String loginInfo) throws UsernameNotFoundException {
 
 		// User from DB
-		UserInformation user = userInformationRepository.findByEmailOrPhoneNumber(phoneOrEmail, phoneOrEmail).orElseThrow(() -> {
+		UserInformation user = userInformationRepository.findByUsernameOrEmailOrPhoneNumber(loginInfo, loginInfo, loginInfo).orElseThrow(() -> {
 			throw new UsernameNotFoundException("User not found");
 		});
 		

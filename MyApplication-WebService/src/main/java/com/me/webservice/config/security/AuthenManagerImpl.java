@@ -26,7 +26,7 @@ public class AuthenManagerImpl implements AuthenticationManager {
 			if (passwordEncoder.matches((CharSequence) auth.getCredentials(), userDetails.getPassword())) {
 
 				// Username, password and authorities
-				return new UsernamePasswordAuthenticationToken(auth.getName(), auth.getCredentials(),
+				return new UsernamePasswordAuthenticationToken(userDetails.getUsername(), auth.getCredentials(),
 						userDetails.getAuthorities());
 			}
 		}

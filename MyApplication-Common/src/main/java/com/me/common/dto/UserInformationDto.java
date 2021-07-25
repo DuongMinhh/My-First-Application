@@ -21,6 +21,9 @@ public class UserInformationDto extends BaseDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
+	
+	@Size(max = 50, message = "Username max size is 100")
+	private String username;
 
 	@Size(max = 100, message = "Email max size is 100")
 	private String email;
