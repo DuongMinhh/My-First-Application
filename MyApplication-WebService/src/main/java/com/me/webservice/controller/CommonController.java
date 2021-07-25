@@ -1,6 +1,5 @@
 package com.me.webservice.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,7 +35,7 @@ public class CommonController {
 	private JwtUtil jwtUtil;
 
 	@PostMapping("/login")
-	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+	public ResponseEntity<LoginResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 		try {
 
 			Authentication rawAuthenObject = new UsernamePasswordAuthenticationToken(loginRequest.getLoginInfo(),
@@ -55,9 +54,9 @@ public class CommonController {
 	}
 
 	@GetMapping(value = "/logout")
-	public ResponseEntity<?> logout() {
+	public ResponseEntity<LoginResponse> logout() {
 		try {
-			return ResponseEntity.ok(new LoginResponse("", "", new ArrayList<>()));
+			return ResponseEntity.ok(new LoginResponse());
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			return null;

@@ -44,8 +44,10 @@ public class AuthenTokenFilter extends OncePerRequestFilter {
 
 					UsernamePasswordAuthenticationToken authenticatedObject = new UsernamePasswordAuthenticationToken(
 							userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
-
+					
+					// Add authenticated object to app context
 					SecurityContextHolder.getContext().setAuthentication(authenticatedObject);
+					
 					filterChain.doFilter(request, response);
 				} else {
 					response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: Unauthorized");
