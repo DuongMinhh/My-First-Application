@@ -34,8 +34,4 @@ public class AdminDto extends BaseDto implements Serializable {
 
 	private UserInformationDto userInformation;
 
-	private Integer roleId;
-
-	private RoleDto role;
-
 }

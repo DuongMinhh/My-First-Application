@@ -9,11 +9,9 @@ import com.me.common.entity.Admin;
 @Mapper(componentModel = "spring")
 public interface AdminMapper {
 
-	@Mapping(target = "role", ignore = true)
 	@Mapping(target = "userInformation", ignore = true)
 	Admin dtoToEntity(AdminDto admin);
 	
-	@Mapping(target = "role", ignore = true)
 	@Mapping(target = "userInformation", ignore = true)
 	AdminDto entityToDto(Admin admin);
 }

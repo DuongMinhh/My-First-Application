@@ -38,8 +38,4 @@ private static final long serialVersionUID = 1L;
 	
 	private BalanceDto balance;
 	
-	private Integer roleId;
-	
-	private RoleDto role;
-	
 }

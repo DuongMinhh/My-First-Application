@@ -18,17 +18,14 @@ import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 /**
- * Configurer for security filters
- * 
- * @author DuongMinh
- *
+ * @author DUONG MINH
  */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	static final RequestMatcher SECURITY_EXCLUSION_MATCHER;
+	static final RequestMatcher EXCLUSION_URL_MATCHER;
 	static {
         String[] urls = new String[] {
         		"/**"
@@ -37,19 +34,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         for (String url : urls) {
             matcherList.add(new AntPathRequestMatcher(url));
         }
-
-        //Link Matchers in "OR" config.
-        SECURITY_EXCLUSION_MATCHER = new OrRequestMatcher(matcherList);
+        EXCLUSION_URL_MATCHER = new OrRequestMatcher(matcherList);
 	}
 	
 	@Autowired
-	CustomUserService userService;
-
-	@Autowired
-	AuthenEntryPoint authenEntryPoint;
+	private AuthenEntryPoint authenEntryPoint;
 
 	@Bean
-	AuthenTokenFilter authenTokenFilter() {
+	public AuthenTokenFilter authenTokenFilter() {
 		return new AuthenTokenFilter();
 	};
 
@@ -62,17 +54,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				
 				.and()
 				.authorizeRequests()
-//				.antMatchers("/management/**")
-//				.hasAnyAuthority("ROLE_ADMIN", "ROLE_NORMAL")
-//				
-//				.and()
-//				.authorizeRequests()
-//				.antMatchers("/admin/**")
-//				.hasAnyAuthority("ROLE_ADMIN")
-				
-				.anyRequest()
+				.requestMatchers(EXCLUSION_URL_MATCHER)
 				.permitAll()
-	
+				
+				.and()
+				.authorizeRequests()
+				.anyRequest()
+				.authenticated()
 				;
 		http.addFilterBefore(authenTokenFilter(), UsernamePasswordAuthenticationFilter.class)
 				;

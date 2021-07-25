@@ -32,4 +32,10 @@ public class UserInformationDto extends BaseDto implements Serializable {
 	@NotBlank(message = "Password is not blank")
 	private String password;
 	
+	private Integer roleId;
+	
+	private RoleDto role;
+	
+	private Boolean isEnable;
+	
 }

@@ -8,7 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import fa.training.entities.User;
+import com.me.common.entity.UserInformation;
+
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
@@ -16,24 +17,26 @@ public class CustomUserDetails implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
-	private String username;
+	private String phoneNumber;
+	private String email;
 	private String password;
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public CustomUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+	public CustomUserDetails(String phoneNumber, String email, String password, Collection<? extends GrantedAuthority> authorities) {
 		super();
-		this.username = username;
+		this.phoneNumber = phoneNumber;
+		this.email = email;
 		this.password = password;
 		this.authorities = authorities;
 	}
 
-	public static CustomUserDetails build(User user) {
+	public static CustomUserDetails build(UserInformation user) {
 
 		// Get role name from account and assign to authorites
 		List<GrantedAuthority> authorities = new ArrayList<>();
-		authorities.add(new SimpleGrantedAuthority(user.getRole().getRoleName()));
+		authorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
 
-		return new CustomUserDetails(user.getUsername(), user.getPassword(), authorities);
+		return new CustomUserDetails(user.getPhoneNumber(), user.getEmail(), user.getPassword(), authorities);
 	}
 
 	@Override
@@ -48,7 +51,7 @@ public class CustomUserDetails implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return this.username;
+		return "Phone: " + this.phoneNumber + " - Email: " + this.email; 
 	}
 
 	@Override

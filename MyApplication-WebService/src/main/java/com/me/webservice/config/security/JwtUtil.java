@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class JwtUtil {
 
-	private final String JWT_SECRET = "duongMinhSecretKey";
+	private final String JWT_SECRET = "duongnm5SecretKey";
 	private final int JWT_EXPIRATION = 86400000;
 //	private static final String TOKEN_PREFIX = "Bearer";
 
@@ -34,18 +34,17 @@ public class JwtUtil {
 	public boolean validateJwt(String token) {
 		try {
 			log.info("Issuer: " + Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token).getBody().getIssuer());
-			log.info("Expiration: "
-					+ Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token).getBody().getExpiration());
+			log.info("Expiration: " + Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token).getBody().getExpiration());
 			log.info("Token is ok");
 			return true;
 		} catch (MalformedJwtException e) {
-			log.error(e.getMessage());
+			log.info(e.getMessage());
 		} catch (ExpiredJwtException e) {
-			log.error(e.getMessage());
+			log.info(e.getMessage());
 		} catch (IllegalArgumentException e) {
-			log.error(e.getMessage());
+			log.info(e.getMessage());
 		} catch (NullPointerException e) {
-			log.error(e.getMessage());
+			log.info(e.getMessage());
 		}
 		return false;
 	}

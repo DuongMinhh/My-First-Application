@@ -6,30 +6,26 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.me.common.repository.AdminRepository;
-import com.me.common.repository.CustomerRepository;
-import com.me.common.repository.SellerRepository;
-
+import com.me.common.entity.UserInformation;
+import com.me.common.repository.UserInformationRepository;
 
 @Service
 public class CustomUserService implements UserDetailsService {
 
 	@Autowired
-	private AdminRepository adminRepository;
-	
-	@Autowired
-	private CustomerRepository customerRepository;
-	
-	@Autowired
-	private SellerRepository sellerRepository;
+	private UserInformationRepository userInformationRepository;
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String phoneOrEmail) throws UsernameNotFoundException {
 
 		// User from DB
-		User user = userRepo.findByUsername(username);
+		UserInformation user = userInformationRepository.findByEmailOrPhoneNumber(phoneOrEmail, phoneOrEmail).orElseThrow(() -> {
+			throw new UsernameNotFoundException("User not found");
+		});
+		
+		if (!user.getIsEnable()) throw new UsernameNotFoundException("User is locked!");
 
 		// Return custom user
-		return user.getStatus() ? CustomUserDetails.build(user) : null;
+		return CustomUserDetails.build(user);
 	}
 }

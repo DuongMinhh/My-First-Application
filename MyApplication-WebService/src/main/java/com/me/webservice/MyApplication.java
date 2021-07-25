@@ -16,7 +16,7 @@ import com.me.common.repository.RoleRepository;
 
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.me.common"})
+@ComponentScan(basePackages = {"com.me.common", "com.me.webservice"})
 @EnableJpaRepositories("com.me.common.repository")
 @EntityScan(basePackages = {"com.me.common.entity"})
 public class MyApplication {

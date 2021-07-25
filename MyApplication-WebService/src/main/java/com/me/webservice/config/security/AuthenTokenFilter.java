@@ -33,7 +33,7 @@ public class AuthenTokenFilter extends OncePerRequestFilter {
 		log.info(request.getRequestURI());
 
 		// No need check jwt
-		if (WebSecurityConfig.SECURITY_EXCLUSION_MATCHER.matches(request)) {
+		if (WebSecurityConfig.EXCLUSION_URL_MATCHER.matches(request)) {
 			log.info("===========================Bypass filer=========================\n");
 			filterChain.doFilter(request, response);
 		}

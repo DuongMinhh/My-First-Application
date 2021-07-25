@@ -10,12 +10,10 @@ import com.me.common.entity.Customer;
 public interface CustomerMapper {
 
 	@Mapping(target = "balance", ignore = true)
-	@Mapping(target = "role", ignore = true)
 	@Mapping(target = "userInformation", ignore = true)
 	Customer dtoToEntity(CustomerDto customer);
 
 	@Mapping(target = "balance", ignore = true)
-	@Mapping(target = "role", ignore = true)
 	@Mapping(target = "userInformation", ignore = true)
 	CustomerDto entityToDto(Customer customer);
 }

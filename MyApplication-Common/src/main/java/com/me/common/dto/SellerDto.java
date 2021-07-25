@@ -46,7 +46,4 @@ public class SellerDto extends BaseDto implements Serializable {
 
 	private BalanceDto balance;
 
-	private Integer roleId;
-
-	private RoleDto role;
 }

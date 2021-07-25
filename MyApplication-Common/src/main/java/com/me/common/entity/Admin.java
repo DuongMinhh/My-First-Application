@@ -9,12 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
-
-import com.me.common.enums.RoleEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -50,17 +46,5 @@ public class Admin extends BaseEntity implements Serializable {
 	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "user_information_id", insertable = false, updatable = false)
 	private UserInformation userInformation;
-	
-	@Column(name = "role_id", nullable = false)
-	private Integer roleId;
-	
-	@ManyToOne
-	@JoinColumn(name = "role_id", insertable = false, updatable = false)
-	private Role role;
-	
-	@PrePersist
-	public void prePersist() {
-		this.roleId = RoleEnum.ROLE_ADMIN.value;
-	}
 	
 }

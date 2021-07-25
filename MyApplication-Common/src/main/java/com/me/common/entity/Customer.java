@@ -9,12 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
-
-import com.me.common.enums.RoleEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -58,16 +54,4 @@ public class Customer extends BaseEntity implements Serializable {
 	@JoinColumn(name = "balance_id", insertable = false, updatable = false)
 	private Balance balance;
 	
-	@Column(name = "role_id", nullable = false)
-	private Integer roleId;
-	
-	@ManyToOne
-	@JoinColumn(name = "role_id", insertable = false, updatable = false)
-	private Role role;
-	
-	@PrePersist
-	public void prePersist() {
-		this.roleId = RoleEnum.ROLE_CUSTOMER.value;
-	}
-
 }

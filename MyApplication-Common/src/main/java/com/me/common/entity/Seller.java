@@ -10,14 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
-import com.me.common.enums.RoleEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,7 +24,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "seller", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = {"email", "phone_number"}))
+@Table(name = "seller", schema = "public")
 public class Seller extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -63,17 +58,5 @@ public class Seller extends BaseEntity implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "balance_id", insertable = false, updatable = false)
 	private Balance balance;
-	
-	@Column(name = "role_id", nullable = false)
-	private Integer roleId;
-	
-	@ManyToOne
-	@JoinColumn(name = "role_id", insertable = false, updatable = false)
-	private Role role;
-	
-	@PrePersist
-	public void prePersist() {
-		this.roleId = RoleEnum.ROLE_SELLER.value;
-	}
 	
 }
