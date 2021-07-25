@@ -33,9 +33,8 @@ public class JwtUtil {
 
 	public boolean validateJwt(String token) {
 		try {
-			log.info("Issuer: " + Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token).getBody().getIssuer());
-			log.info("Expiration: " + Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token).getBody().getExpiration());
-			log.info("Token is ok");
+			Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token).getBody().getIssuer();
+			Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token).getBody().getExpiration();
 			return true;
 		} catch (MalformedJwtException e) {
 			log.info(e.getMessage());

@@ -41,6 +41,6 @@ public class Category extends BaseEntity implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "parent_category_id", insertable = false, updatable = false)
-	private Category category;
+	private Category parentCategory;
 	
 }

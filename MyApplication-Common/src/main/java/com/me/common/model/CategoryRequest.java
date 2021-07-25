@@ -1,11 +1,9 @@
-package com.me.common.dto;
+package com.me.common.model;
 
-import java.io.Serializable;
-
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,11 +12,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class CategoryDto extends BaseDto implements Serializable {
+public class CategoryRequest {
 
-	private static final long serialVersionUID = 1L;
-
+	@NotNull
 	private Long id;
 	
 	@Size(max = 100, message = "Name max size is 100")
@@ -28,6 +24,4 @@ public class CategoryDto extends BaseDto implements Serializable {
 	private String description;
 	
 	private Long parentCategoryId;
-	
-	private CategoryDto parentCategory;
 }
