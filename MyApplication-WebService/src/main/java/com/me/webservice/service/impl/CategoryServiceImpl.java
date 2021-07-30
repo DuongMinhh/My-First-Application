@@ -62,6 +62,7 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
+	@Transactional
 	public CategoryDto create(CategoryRequest categoryDto) throws CustomException {
 		try {
 			Category category = categoryMapper.modelToEntity(categoryDto);
@@ -93,8 +94,9 @@ public class CategoryServiceImpl implements CategoryService {
 		}
 	}
 
-	@Modifying
 	@Override
+	@Transactional
+	@Modifying
 	public Boolean deleteById(Long categoryId) throws CustomException {
 		try {
 			categoryRepo.deleteById(categoryId);

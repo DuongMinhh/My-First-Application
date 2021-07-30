@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.me.common.exceptions.CustomException;
 import com.me.common.exceptions.CustomMessage;
+import com.me.common.model.BasicResponse;
 import com.me.common.model.CategoryRequest;
 import com.me.webservice.service.CategoryService;
 
@@ -33,7 +34,7 @@ public class CategoryController {
 		try {
 			return new ResponseEntity<>(categoryService.getNodes(), HttpStatus.OK);
 		} catch (CustomException e) {
-			return new ResponseEntity<>(e.getMessage(), e.getCode());
+			return new ResponseEntity<>(new BasicResponse(e.getCode(), e.getMessage()), e.getCode());
 		}
 	}
 	
@@ -42,7 +43,7 @@ public class CategoryController {
 		try {
 			return new ResponseEntity<>(categoryService.getByNodeId(categoryId), HttpStatus.OK);
 		} catch (CustomException e) {
-			return new ResponseEntity<>(e.getMessage(), e.getCode());
+			return new ResponseEntity<>(new BasicResponse(e.getCode(), e.getMessage()), e.getCode());
 		}
 	}
 	
@@ -51,7 +52,7 @@ public class CategoryController {
 		try {
 			return new ResponseEntity<>(categoryService.getById(categoryId), HttpStatus.OK);
 		} catch (CustomException e) {
-			return new ResponseEntity<>(e.getMessage(), e.getCode());
+			return new ResponseEntity<>(new BasicResponse(e.getCode(), e.getMessage()), e.getCode());
 		}
 	}
 	
@@ -60,7 +61,7 @@ public class CategoryController {
 		try {
 			return new ResponseEntity<>(categoryService.create(categoryRequest), HttpStatus.OK);
 		} catch (CustomException e) {
-			return new ResponseEntity<>(e.getMessage(), e.getCode());
+			return new ResponseEntity<>(new BasicResponse(e.getCode(), e.getMessage()), e.getCode());
 		}
 	}
 	
@@ -69,7 +70,7 @@ public class CategoryController {
 		try {
 			return new ResponseEntity<>(categoryService.update(categoryRequest), HttpStatus.OK);
 		} catch (CustomException e) {
-			return new ResponseEntity<>(e.getMessage(), e.getCode());
+			return new ResponseEntity<>(new BasicResponse(e.getCode(), e.getMessage()), e.getCode());
 		}
 	}
 	
@@ -79,7 +80,7 @@ public class CategoryController {
 			categoryService.deleteById(categoryId);
 			return new ResponseEntity<>(CustomMessage.ACTION_SUCCESS, HttpStatus.OK);
 		} catch (CustomException e) {
-			return new ResponseEntity<>(e.getMessage(), e.getCode());
+			return new ResponseEntity<>(new BasicResponse(e.getCode(), e.getMessage()), e.getCode());
 		}
 	}
 	
