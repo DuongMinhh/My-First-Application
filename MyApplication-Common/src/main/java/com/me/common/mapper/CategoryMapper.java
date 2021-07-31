@@ -1,21 +1,51 @@
 package com.me.common.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
+import org.modelmapper.TypeMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.me.common.dto.CategoryDto;
 import com.me.common.entity.Category;
 import com.me.common.model.CategoryRequest;
 
-@Mapper(componentModel = "spring")
-public interface CategoryMapper {
+@Component
+public class CategoryMapper {
+	
+	@Autowired
+	private ModelMapper mapper;
 
-	@Mapping(target = "parentCategory", ignore = true)
-	CategoryDto entityToDto(Category category);
+	public CategoryDto entiyToDto(Category category) {
+		TypeMap<Category, CategoryDto> typeMap = mapper.addMappings(new PropertyMap<Category, CategoryDto>() {
+			@Override
+			protected void configure() {
+				skip().setParentCategory(null);
+				map(source.getParentCategoryId(), destination.getParentCategoryId());
+			}
+		});
+		return typeMap.map(category);
+	}
 	
-	@Mapping(target = "parentCategory", ignore = true)
-	Category dtoToEntity(CategoryDto category);
+	public Category dtoToEntity(CategoryDto category) {
+		TypeMap<CategoryDto, Category> typeMap = mapper.addMappings(new PropertyMap<CategoryDto, Category>() {
+			@Override
+			protected void configure() {
+				skip().setParentCategory(null);
+				map(source.getParentCategoryId(), destination.getParentCategoryId());
+			}
+		});
+		return typeMap.map(category);
+	}
 	
-	@Mapping(target = "parentCategory", ignore = true)
-	Category modelToEntity(CategoryRequest category);
+	public Category modelToEntity(CategoryRequest category) {
+		TypeMap<CategoryRequest, Category> typeMap = mapper.addMappings(new PropertyMap<CategoryRequest, Category>() {
+			@Override
+			protected void configure() {
+				skip().setParentCategory(null);
+				map(source.getParentCategoryId(), destination.getParentCategoryId());
+			}
+		});
+		return typeMap.map(category);
+	}
 }

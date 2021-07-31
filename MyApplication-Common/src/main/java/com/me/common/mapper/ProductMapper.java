@@ -1,52 +1,51 @@
 package com.me.common.mapper;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
+import org.modelmapper.TypeMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.springframework.util.CollectionUtils;
-
-import com.me.common.dto.ImageStorageDto;
 import com.me.common.dto.ProductDto;
-import com.me.common.entity.ImageStorage;
 import com.me.common.entity.Product;
 
-@Mapper(componentModel = "spring")
-public interface ProductMapper extends ImageStorageMapper {
+@Component
+public class ProductMapper {
 
-	@Mapping(target = "brand", ignore = true)
-	@Mapping(target = "category", ignore = true)
-	@Mapping(target = "seller", ignore = true)
-	Product dtoToEntity(ProductDto product);
+	@Autowired
+	private ModelMapper mapper;
+
+	public ProductDto entiyToDto(Product obj) {
+		TypeMap<Product, ProductDto> typeMap = mapper.addMappings(new PropertyMap<Product, ProductDto>() {
+			@Override
+			protected void configure() {
+				skip().setBrand(null);
+				skip().setCategory(null);
+				skip().setSeller(null);
+				map(source.getBrandId(), destination.getBrandId());
+				map(source.getCategoryId(), destination.getCategoryId());
+				map(source.getSellerId(), destination.getSellerId());
+				map(source.getListImageStorage(), destination.getListImageStorage());
+				
+			}
+		});
+		return typeMap.map(obj);
+	}
 	
-	@Mapping(target = "brand", ignore = true)
-	@Mapping(target = "category", ignore = true)
-	@Mapping(target = "seller", ignore = true)
-	ProductDto entityToDto(Product product);
+	public Product dtoToEntity(ProductDto obj) {
+		TypeMap<ProductDto, Product> typeMap = mapper.addMappings(new PropertyMap<ProductDto, Product>() {
+			@Override
+			protected void configure() {
+				skip().setBrand(null);
+				skip().setCategory(null);
+				skip().setSeller(null);
+				map(source.getBrandId(), destination.getBrandId());
+				map(source.getCategoryId(), destination.getCategoryId());
+				map(source.getSellerId(), destination.getSellerId());
+				map(source.getListImageStorage(), destination.getListImageStorage());
+			}
+		});
+		return typeMap.map(obj);
+	}
 	
-//	default List<ImageStorage> listImageStorageDtoToEntity(List<ImageStorageDto> listImageStorage) {
-//		try {
-//			if (CollectionUtils.isEmpty(listImageStorage)) {
-//				return Collections.emptyList();
-//			} else {
-//				return listImageStorage.stream().map(this::dtoToEntity).collect(Collectors.toList());
-//			}
-//		} catch (Exception e) {
-//			return Collections.emptyList();
-//		}
-//	}
-//	
-//	default List<ImageStorageDto> listImageStorageEntityToDto(List<ImageStorage> listImageStorage) {
-//		try {
-//			if (CollectionUtils.isEmpty(listImageStorage)) {
-//				return Collections.emptyList();
-//			} else {
-//				return listImageStorage.stream().map(this::entityToDto).collect(Collectors.toList());
-//			}
-//		} catch (Exception e) {
-//			return Collections.emptyList();
-//		}
-//	}
 }

@@ -1,19 +1,46 @@
 package com.me.common.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
+import org.modelmapper.TypeMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.me.common.dto.CustomerDto;
 import com.me.common.entity.Customer;
 
-@Mapper(componentModel = "spring")
-public interface CustomerMapper {
+@Component
+public class CustomerMapper {
 
-	@Mapping(target = "balance", ignore = true)
-	@Mapping(target = "userInformation", ignore = true)
-	Customer dtoToEntity(CustomerDto customer);
+	@Autowired
+	private ModelMapper mapper;
 
-	@Mapping(target = "balance", ignore = true)
-	@Mapping(target = "userInformation", ignore = true)
-	CustomerDto entityToDto(Customer customer);
+	public CustomerDto entiyToDto(Customer customer) {
+		TypeMap<Customer, CustomerDto> typeMap = mapper.addMappings(new PropertyMap<Customer, CustomerDto>() {
+			@Override
+			protected void configure() {
+				skip().setBalance(null);
+				skip().setUserInformation(null);
+				map(source.getBalanceId(), destination.getBalanceId());
+				map(source.getUserInformationId(), destination.getUserInformationId());
+
+			}
+		});
+		return typeMap.map(customer);
+	}
+
+	public Customer dtoToEntity(CustomerDto customer) {
+		TypeMap<CustomerDto, Customer> typeMap = mapper.addMappings(new PropertyMap<CustomerDto, Customer>() {
+			@Override
+			protected void configure() {
+				skip().setBalance(null);
+				skip().setUserInformation(null);
+				map(source.getBalanceId(), destination.getBalanceId());
+				map(source.getUserInformationId(), destination.getUserInformationId());
+
+			}
+		});
+		return typeMap.map(customer);
+	}
+
 }

@@ -1,21 +1,48 @@
 package com.me.common.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
+import org.modelmapper.TypeMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.me.common.dto.TransactionHistoryDto;
 import com.me.common.entity.TransactionHistory;
 
-@Mapper(componentModel = "spring")
-public interface TransactionHistoryMapper {
+@Component
+public class TransactionHistoryMapper {
 
-	@Mapping(target = "customer", ignore = true)
-	@Mapping(target = "seller", ignore = true)
-	@Mapping(target = "orderDetails", ignore = true)
-	TransactionHistory dtoToEntity(TransactionHistoryDto transactionHistory);
+	@Autowired
+	private ModelMapper mapper;
+
+	public TransactionHistoryDto entiyToDto(TransactionHistory obj) {
+		TypeMap<TransactionHistory, TransactionHistoryDto> typeMap = mapper.addMappings(new PropertyMap<TransactionHistory, TransactionHistoryDto>() {
+			@Override
+			protected void configure() {
+				skip().setCustomer(null);
+				skip().setSeller(null);
+				skip().setOrderDetails(null);
+				map(source.getCustomerId(), destination.getCustomerId());
+				map(source.getSellerId(), destination.getSellerId());
+				map(source.getOrderDetailId(), destination.getOrderDetailId());
+			}
+		});
+		return typeMap.map(obj);
+	}
 	
-	@Mapping(target = "customer", ignore = true)
-	@Mapping(target = "seller", ignore = true)
-	@Mapping(target = "orderDetails", ignore = true)
-	TransactionHistoryDto entityToDto(TransactionHistory transactionHistory);
+	public TransactionHistory dtoToEntity(TransactionHistoryDto obj) {
+		TypeMap<TransactionHistoryDto, TransactionHistory> typeMap = mapper.addMappings(new PropertyMap<TransactionHistoryDto, TransactionHistory>() {
+			@Override
+			protected void configure() {
+				skip().setCustomer(null);
+				skip().setSeller(null);
+				skip().setOrderDetails(null);
+				map(source.getCustomerId(), destination.getCustomerId());
+				map(source.getSellerId(), destination.getSellerId());
+				map(source.getOrderDetailId(), destination.getOrderDetailId());
+			}
+		});
+		return typeMap.map(obj);
+	}
+	
 }

@@ -1,19 +1,44 @@
 package com.me.common.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
+import org.modelmapper.TypeMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.me.common.dto.OrderDetailsDto;
 import com.me.common.entity.OrderDetails;
 
-@Mapper(componentModel = "spring")
-public interface OrderDetailsMapper {
+@Component
+public class OrderDetailsMapper {
 
-	@Mapping(target = "order", ignore = true)
-	@Mapping(target = "product", ignore = true)
-	OrderDetails dtoToEntity(OrderDetailsDto orderDetails);
-	
-	@Mapping(target = "order", ignore = true)
-	@Mapping(target = "product", ignore = true)
-	OrderDetailsDto entityToDto(OrderDetails orderDetails);
+	@Autowired
+	private ModelMapper mapper;
+
+	public OrderDetailsDto entiyToDto(OrderDetails obj) {
+		TypeMap<OrderDetails, OrderDetailsDto> typeMap = mapper.addMappings(new PropertyMap<OrderDetails, OrderDetailsDto>() {
+			@Override
+			protected void configure() {
+				skip().setOrder(null);
+				skip().setProduct(null);
+				map(source.getOrderId(), destination.getOrderId());
+				map(source.getProductId(), destination.getProductId());
+			}
+		});
+		return typeMap.map(obj);
+	}
+
+	public OrderDetails dtoToEntity(OrderDetailsDto obj) {
+		TypeMap<OrderDetailsDto, OrderDetails> typeMap = mapper.addMappings(new PropertyMap<OrderDetailsDto, OrderDetails>() {
+			@Override
+			protected void configure() {
+				skip().setOrder(null);
+				skip().setProduct(null);
+				map(source.getOrderId(), destination.getOrderId());
+				map(source.getProductId(), destination.getProductId());
+			}
+		});
+		return typeMap.map(obj);
+	}
+
 }

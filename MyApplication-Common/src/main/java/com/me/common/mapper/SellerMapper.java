@@ -1,50 +1,46 @@
 package com.me.common.mapper;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
+import org.modelmapper.TypeMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.springframework.util.CollectionUtils;
-
-import com.me.common.dto.ProductDto;
 import com.me.common.dto.SellerDto;
-import com.me.common.entity.Product;
 import com.me.common.entity.Seller;
 
-@Mapper(componentModel = "spring")
-public interface SellerMapper extends ProductMapper {
+@Component
+public class SellerMapper {
+
+	@Autowired
+	private ModelMapper mapper;
+
+	public SellerDto entiyToDto(Seller obj) {
+		TypeMap<Seller, SellerDto> typeMap = mapper.addMappings(new PropertyMap<Seller, SellerDto>() {
+			@Override
+			protected void configure() {
+				skip().setBalance(null);
+				skip().setUserInformation(null);
+				map(source.getBalanceId(), destination.getBalanceId());
+				map(source.getUserInformationId(), destination.getUserInformationId());
+				map(source.getListProduct(), destination.getListProduct());
+			}
+		});
+		return typeMap.map(obj);
+	}
+
+	public Seller dtoToEntity(SellerDto obj) {
+		TypeMap<SellerDto, Seller> typeMap = mapper.addMappings(new PropertyMap<SellerDto, Seller>() {
+			@Override
+			protected void configure() {
+				skip().setBalance(null);
+				skip().setUserInformation(null);
+				map(source.getBalanceId(), destination.getBalanceId());
+				map(source.getUserInformationId(), destination.getUserInformationId());
+				map(source.getListProduct(), destination.getListProduct());
+			}
+		});
+		return typeMap.map(obj);
+	}
 	
-	@Mapping(target = "balance", ignore = true)
-	@Mapping(target = "userInformation", ignore = true)
-	Seller dtoToEntity(SellerDto seller);
-	
-	@Mapping(target = "balance", ignore = true)
-	@Mapping(target = "userInformation", ignore = true)
-	SellerDto entityToDto(Seller seller);
-	
-//	default List<Product> listProductDtoToEntity(List<ProductDto> listProduct) {
-//		try {
-//			if (CollectionUtils.isEmpty(listProduct)) {
-//				return Collections.emptyList();
-//			} else {
-//				return listProduct.stream().map(this::dtoToEntity).collect(Collectors.toList());
-//			}
-//		} catch (Exception e) {
-//			return Collections.emptyList();
-//		}
-//	}
-//	
-//	default List<ProductDto> listProductEntityToDto(List<Product> listProduct) {
-//		try {
-//			if (CollectionUtils.isEmpty(listProduct)) {
-//				return Collections.emptyList();
-//			} else {
-//				return listProduct.stream().map(this::entityToDto).collect(Collectors.toList());
-//			}
-//		} catch (Exception e) {
-//			return Collections.emptyList();
-//		}
-//	}
 }
