@@ -3,10 +3,12 @@ package com.me.webservice;
 import java.util.Arrays;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,20 +19,25 @@ import com.me.common.enums.RoleEnum;
 import com.me.common.repository.RoleRepository;
 import com.me.common.repository.UserInformationRepository;
 
-
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.me.common", "com.me.webservice"})
+@ComponentScan(basePackages = { "com.me.common", "com.me.webservice" })
 @EnableJpaRepositories("com.me.common.repository")
-@EntityScan(basePackages = {"com.me.common.entity"})
+@EntityScan(basePackages = { "com.me.common.entity" })
 public class MyApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MyApplication.class, args);
 	}
 
+	@Bean("modelMapper")
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
+
 	@Autowired
-	private void onStartUp(UserInformationRepository userRepo, RoleRepository roleRepo, PasswordEncoder passwordEncoder) {
-		
+	private void onStartUp(UserInformationRepository userRepo, RoleRepository roleRepo,
+			PasswordEncoder passwordEncoder) {
+
 		// Create roles for app
 		Role roleAdmin = new Role(RoleEnum.ROLE_ADMIN.value, RoleEnum.ROLE_ADMIN.toString());
 		Role roleSeller = new Role(RoleEnum.ROLE_SELLER.value, RoleEnum.ROLE_SELLER.toString());
@@ -43,7 +50,7 @@ public class MyApplication {
 				roleRepo.save(r);
 			}
 		});
-		
+
 		// Create system admin
 		if (!userRepo.findByUsername("admin").isPresent()) {
 			UserInformation adminInformation = new UserInformation();
@@ -52,7 +59,7 @@ public class MyApplication {
 			adminInformation.setPhoneNumber("0978240409");
 			adminInformation.setPassword(passwordEncoder.encode("123456"));
 			adminInformation.setRoleId(RoleEnum.ROLE_ADMIN.value);
-			
+
 			userRepo.save(adminInformation);
 		}
 	}

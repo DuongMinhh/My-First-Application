@@ -26,27 +26,27 @@ public interface ProductMapper extends ImageStorageMapper {
 	@Mapping(target = "seller", ignore = true)
 	ProductDto entityToDto(Product product);
 	
-	default List<ImageStorage> listImageStorageDtoToEntity(List<ImageStorageDto> listImageStorage) {
-		try {
-			if (CollectionUtils.isEmpty(listImageStorage)) {
-				return Collections.emptyList();
-			} else {
-				return listImageStorage.stream().map(this::dtoToEntity).collect(Collectors.toList());
-			}
-		} catch (Exception e) {
-			return Collections.emptyList();
-		}
-	}
-	
-	default List<ImageStorageDto> listImageStorageEntityToDto(List<ImageStorage> listImageStorage) {
-		try {
-			if (CollectionUtils.isEmpty(listImageStorage)) {
-				return Collections.emptyList();
-			} else {
-				return listImageStorage.stream().map(this::entityToDto).collect(Collectors.toList());
-			}
-		} catch (Exception e) {
-			return Collections.emptyList();
-		}
-	}
+//	default List<ImageStorage> listImageStorageDtoToEntity(List<ImageStorageDto> listImageStorage) {
+//		try {
+//			if (CollectionUtils.isEmpty(listImageStorage)) {
+//				return Collections.emptyList();
+//			} else {
+//				return listImageStorage.stream().map(this::dtoToEntity).collect(Collectors.toList());
+//			}
+//		} catch (Exception e) {
+//			return Collections.emptyList();
+//		}
+//	}
+//	
+//	default List<ImageStorageDto> listImageStorageEntityToDto(List<ImageStorage> listImageStorage) {
+//		try {
+//			if (CollectionUtils.isEmpty(listImageStorage)) {
+//				return Collections.emptyList();
+//			} else {
+//				return listImageStorage.stream().map(this::entityToDto).collect(Collectors.toList());
+//			}
+//		} catch (Exception e) {
+//			return Collections.emptyList();
+//		}
+//	}
 }

@@ -9,4 +9,6 @@ public interface CustomMessage {
 	String ACTION_SUCCESS = "Action success";
 	
 	String ACTION_FAIL = "Action faild";
+	
+	String IMAGE_TYPE_FAIL = "Type of image is illogical";
 }

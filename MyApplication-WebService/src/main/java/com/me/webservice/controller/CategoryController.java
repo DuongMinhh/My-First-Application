@@ -30,7 +30,7 @@ public class CategoryController {
 	private CategoryService categoryService;
 	
 	@GetMapping
-	public ResponseEntity<?> getNodes() {
+	public ResponseEntity<?> getRootNodes() {
 		try {
 			return new ResponseEntity<>(categoryService.getNodes(), HttpStatus.OK);
 		} catch (CustomException e) {

@@ -24,27 +24,27 @@ public interface SellerMapper extends ProductMapper {
 	@Mapping(target = "userInformation", ignore = true)
 	SellerDto entityToDto(Seller seller);
 	
-	default List<Product> listProductDtoToEntity(List<ProductDto> listProduct) {
-		try {
-			if (CollectionUtils.isEmpty(listProduct)) {
-				return Collections.emptyList();
-			} else {
-				return listProduct.stream().map(this::dtoToEntity).collect(Collectors.toList());
-			}
-		} catch (Exception e) {
-			return Collections.emptyList();
-		}
-	}
-	
-	default List<ProductDto> listProductEntityToDto(List<Product> listProduct) {
-		try {
-			if (CollectionUtils.isEmpty(listProduct)) {
-				return Collections.emptyList();
-			} else {
-				return listProduct.stream().map(this::entityToDto).collect(Collectors.toList());
-			}
-		} catch (Exception e) {
-			return Collections.emptyList();
-		}
-	}
+//	default List<Product> listProductDtoToEntity(List<ProductDto> listProduct) {
+//		try {
+//			if (CollectionUtils.isEmpty(listProduct)) {
+//				return Collections.emptyList();
+//			} else {
+//				return listProduct.stream().map(this::dtoToEntity).collect(Collectors.toList());
+//			}
+//		} catch (Exception e) {
+//			return Collections.emptyList();
+//		}
+//	}
+//	
+//	default List<ProductDto> listProductEntityToDto(List<Product> listProduct) {
+//		try {
+//			if (CollectionUtils.isEmpty(listProduct)) {
+//				return Collections.emptyList();
+//			} else {
+//				return listProduct.stream().map(this::entityToDto).collect(Collectors.toList());
+//			}
+//		} catch (Exception e) {
+//			return Collections.emptyList();
+//		}
+//	}
 }
