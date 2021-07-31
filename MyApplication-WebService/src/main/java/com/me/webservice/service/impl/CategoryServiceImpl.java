@@ -20,6 +20,9 @@ import com.me.common.model.CategoryRequest;
 import com.me.common.repository.CategoryRepository;
 import com.me.webservice.service.CategoryService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
@@ -34,8 +37,13 @@ public class CategoryServiceImpl implements CategoryService {
 		try {
 			List<Category> listCategories = categoryRepo.findByParentCategoryIdIsNull()
 					.orElseGet(() -> Collections.emptyList());
+			
+			System.out.println(listCategories);
+			
 			return listCategories.stream().map(categoryMapper::entityToDto).collect(Collectors.toList());
 		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e.getMessage());
 			throw new CustomException(HttpStatus.BAD_REQUEST, CustomMessage.BAD_REQUEST);
 		}
 	}
@@ -47,6 +55,7 @@ public class CategoryServiceImpl implements CategoryService {
 					.orElseGet(() -> Collections.emptyList());
 			return listCategories.stream().map(categoryMapper::entityToDto).collect(Collectors.toList());
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			throw new CustomException(HttpStatus.BAD_REQUEST, CustomMessage.BAD_REQUEST);
 		}
 	}
@@ -57,6 +66,7 @@ public class CategoryServiceImpl implements CategoryService {
 			Category category = categoryRepo.findById(categoryId).orElseGet(() -> new Category());
 			return categoryMapper.entityToDto(category);
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			throw new CustomException(HttpStatus.BAD_REQUEST, CustomMessage.BAD_REQUEST);
 		}
 	}
@@ -66,9 +76,10 @@ public class CategoryServiceImpl implements CategoryService {
 	public CategoryDto create(CategoryRequest categoryDto) throws CustomException {
 		try {
 			Category category = categoryMapper.modelToEntity(categoryDto);
-			category.setId(-1L);
+			category.setId(null);
 			return categoryMapper.entityToDto(categoryRepo.save(category));
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			throw new CustomException(HttpStatus.BAD_REQUEST, CustomMessage.BAD_REQUEST);
 		}
 	}
@@ -90,6 +101,7 @@ public class CategoryServiceImpl implements CategoryService {
 			}
 			return categoryMapper.entityToDto(categoryRepo.save(categoryDb));
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			throw new CustomException(HttpStatus.BAD_REQUEST, CustomMessage.RESOURCE_NOT_FOUND);
 		}
 	}
@@ -102,6 +114,7 @@ public class CategoryServiceImpl implements CategoryService {
 			categoryRepo.deleteById(categoryId);
 			return true;
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			throw new CustomException(HttpStatus.BAD_REQUEST, CustomMessage.RESOURCE_NOT_FOUND);
 		}
 	}

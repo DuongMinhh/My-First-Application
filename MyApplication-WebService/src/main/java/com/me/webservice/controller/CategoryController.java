@@ -38,8 +38,8 @@ public class CategoryController {
 		}
 	}
 	
-	@GetMapping("/{categoryId}/sub")
-	public ResponseEntity<?> getByNodeId(@PathVariable Long categoryId) {
+	@GetMapping("/{id}/sub-categories")
+	public ResponseEntity<?> getByNodeId(@PathVariable("id") Long categoryId) {
 		try {
 			return new ResponseEntity<>(categoryService.getByNodeId(categoryId), HttpStatus.OK);
 		} catch (CustomException e) {
@@ -47,8 +47,8 @@ public class CategoryController {
 		}
 	}
 	
-	@GetMapping("/{categoryId}")
-	public ResponseEntity<?> getById(@PathVariable Long categoryId) {
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getById(@PathVariable("id") Long categoryId) {
 		try {
 			return new ResponseEntity<>(categoryService.getById(categoryId), HttpStatus.OK);
 		} catch (CustomException e) {
@@ -74,8 +74,8 @@ public class CategoryController {
 		}
 	}
 	
-	@DeleteMapping("/{categoryId}")
-	public ResponseEntity<?> deleteById(@PathVariable Long categoryId) {
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteById(@PathVariable("id") Long categoryId) {
 		try {
 			categoryService.deleteById(categoryId);
 			return new ResponseEntity<>(CustomMessage.ACTION_SUCCESS, HttpStatus.OK);

@@ -1,11 +1,8 @@
 package com.me.common.mapper;
 
-import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
-import org.modelmapper.TypeMap;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.googlecode.jmapper.JMapper;
 import com.me.common.dto.CategoryDto;
 import com.me.common.entity.Category;
 import com.me.common.model.CategoryRequest;
@@ -13,39 +10,19 @@ import com.me.common.model.CategoryRequest;
 @Component
 public class CategoryMapper {
 	
-	@Autowired
-	private ModelMapper mapper;
-
-	public CategoryDto entiyToDto(Category category) {
-		TypeMap<Category, CategoryDto> typeMap = mapper.addMappings(new PropertyMap<Category, CategoryDto>() {
-			@Override
-			protected void configure() {
-				skip().setParentCategory(null);
-				map(source.getParentCategoryId(), destination.getParentCategoryId());
-			}
-		});
-		return typeMap.map(category);
+	public CategoryDto entityToDto(Category category) {
+		JMapper<CategoryDto, Category> mapper = new JMapper<>(CategoryDto.class, Category.class);
+		return mapper.getDestination(category);
 	}
 	
 	public Category dtoToEntity(CategoryDto category) {
-		TypeMap<CategoryDto, Category> typeMap = mapper.addMappings(new PropertyMap<CategoryDto, Category>() {
-			@Override
-			protected void configure() {
-				skip().setParentCategory(null);
-				map(source.getParentCategoryId(), destination.getParentCategoryId());
-			}
-		});
-		return typeMap.map(category);
+		JMapper<Category, CategoryDto> mapper = new JMapper<>(Category.class, CategoryDto.class);
+		return mapper.getDestination(category);
 	}
 	
 	public Category modelToEntity(CategoryRequest category) {
-		TypeMap<CategoryRequest, Category> typeMap = mapper.addMappings(new PropertyMap<CategoryRequest, Category>() {
-			@Override
-			protected void configure() {
-				skip().setParentCategory(null);
-				map(source.getParentCategoryId(), destination.getParentCategoryId());
-			}
-		});
-		return typeMap.map(category);
+		JMapper<Category, CategoryRequest> mapper = new JMapper<>(Category.class, CategoryRequest.class);
+		return mapper.getDestination(category);
 	}
+	
 }

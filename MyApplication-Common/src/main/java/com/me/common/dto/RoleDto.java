@@ -2,8 +2,9 @@ package com.me.common.dto;
 
 import java.io.Serializable;
 
-import javax.persistence.Id;
 import javax.validation.constraints.Size;
+
+import com.googlecode.jmapper.annotations.JMap;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,9 +21,10 @@ public class RoleDto extends BaseDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
+	@JMap
 	private Integer id;
 
+	@JMap
 	@Size(max = 30, message = "Name max size is 30")
 	private String name;
 }
