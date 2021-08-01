@@ -40,3 +40,4 @@ mvnw
 mvnw.cmd
 .settings\
 .project
+MyApplication\MyApplication-WebService\src\main\resources\static\images\
