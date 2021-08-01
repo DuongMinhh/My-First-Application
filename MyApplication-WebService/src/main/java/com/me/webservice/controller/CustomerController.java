@@ -11,20 +11,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.me.common.exceptions.CustomException;
 import com.me.common.model.BasicResponse;
-import com.me.common.model.SellerRegisterRequest;
-import com.me.webservice.service.SellerService;
+import com.me.common.model.CustomerRegisterRequest;
+import com.me.webservice.service.CustomerService;
 
 @RestController
-@RequestMapping("/seller")
-public class SellerController {
+@RequestMapping("/customer")
+public class CustomerController {
 
 	@Autowired
-	private SellerService sellerService;
+	private CustomerService customerService;
 	
 	@PostMapping("/register")
-	public ResponseEntity<?> register(@Valid @RequestBody SellerRegisterRequest req) {
+	public ResponseEntity<?> register(@Valid @RequestBody CustomerRegisterRequest req) {
 		try {
-			return ResponseEntity.ok(sellerService.register(req));
+			return ResponseEntity.ok(customerService.register(req));
 		} catch (CustomException e) {
 			return ResponseEntity.status(e.getCode()).body(new BasicResponse(e));
 		}
