@@ -27,4 +27,8 @@ public class ImageStorageDto extends BaseDto implements Serializable {
 	@JMap
 	@Size(max = 256, message = "Local path max size is 256")
 	private String localPath;
+
+	@JMap
+	@Size(max = 256, message = "Local path max size is 256")
+	private String imageName;
 }

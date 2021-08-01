@@ -20,7 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "image_storage", schema = "public")
-public class ImageStorage extends BaseEntity implements Serializable {
+public class ImageStorage extends BaseEntity implements Serializable, Comparable<ImageStorage> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,4 +31,11 @@ public class ImageStorage extends BaseEntity implements Serializable {
 	@Column(name = "local_path", columnDefinition = "varchar(256)")
 	private String localPath;
 	
+	@Column(name = "image_name", columnDefinition = "varchar(256)")
+	private String imageName;
+
+	@Override
+	public int compareTo(ImageStorage o) {
+		return (int) (this.id - o.getId());
+	}
 }

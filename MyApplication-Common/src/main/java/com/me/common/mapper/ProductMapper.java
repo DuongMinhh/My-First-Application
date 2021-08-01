@@ -9,7 +9,7 @@ import com.me.common.entity.Product;
 @Component
 public class ProductMapper {
 
-	public ProductDto entiyToDto(Product obj) {
+	public ProductDto entityToDto(Product obj) {
 		JMapper<ProductDto, Product> mapper = new JMapper<>(ProductDto.class, Product.class);
 		return mapper.getDestination(obj);
 	}

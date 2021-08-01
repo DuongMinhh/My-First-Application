@@ -17,7 +17,6 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "balance", schema = "public")
 public class Balance extends BaseEntity implements Serializable {
@@ -31,4 +30,9 @@ public class Balance extends BaseEntity implements Serializable {
 	@Column(name = "account_balance")
 	private Double accountBalance;
 
+	public Balance(Double accountBalance) {
+		super();
+		this.accountBalance = accountBalance;
+	}
+	
 }

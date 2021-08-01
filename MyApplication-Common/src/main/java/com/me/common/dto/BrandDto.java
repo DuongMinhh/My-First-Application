@@ -1,6 +1,7 @@
 package com.me.common.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.validation.constraints.Size;
 
@@ -29,9 +30,7 @@ public class BrandDto extends BaseDto implements Serializable {
 	private String name;
 	
 	@JMap
-	private Long imageStorageId;
-	
-	private ImageStorageDto imageStorage;
+	private List<ImageStorageDto> listImageStorage;
 	
 	@JMap
 	@Size(max = 2048, message = "Introduction size is 2048")

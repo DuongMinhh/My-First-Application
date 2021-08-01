@@ -9,13 +9,17 @@ import com.me.common.exceptions.CustomException;
 
 public interface BrandService {
 
-	BrandDto save(BrandDto brand, MultipartFile image) throws CustomException;
+	BrandDto save(BrandDto brand) throws CustomException;
+	
+	BrandDto addImage(Long brandId, List<MultipartFile> images) throws CustomException;
 	
 	BrandDto update(BrandDto brand) throws CustomException;
 	
-	BrandDto getById(Integer id) throws CustomException;
+	BrandDto getById(Long id) throws CustomException;
 	
 	List<BrandDto> getAll() throws CustomException;
 	
-	Boolean deleteById(Integer id) throws CustomException;
+	Boolean deleteById(Long id) throws CustomException;
+	
+	Boolean deleteImage(Long brandId, Long imageId) throws CustomException;
 }

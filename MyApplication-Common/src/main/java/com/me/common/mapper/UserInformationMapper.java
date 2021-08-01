@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import com.googlecode.jmapper.JMapper;
 import com.me.common.dto.UserInformationDto;
 import com.me.common.entity.UserInformation;
+import com.me.common.model.SellerRegisterRequest;
 
 @Component
 public class UserInformationMapper {
@@ -16,6 +17,11 @@ public class UserInformationMapper {
 
 	public UserInformation dtoToEntity(UserInformationDto obj) {
 		JMapper<UserInformation, UserInformationDto> mapper = new JMapper<>(UserInformation.class, UserInformationDto.class);
+		return mapper.getDestination(obj);
+	}
+	
+	public UserInformation modelToEntity(SellerRegisterRequest obj) {
+		JMapper<UserInformation, SellerRegisterRequest> mapper = new JMapper<>(UserInformation.class, SellerRegisterRequest.class);
 		return mapper.getDestination(obj);
 	}
 }

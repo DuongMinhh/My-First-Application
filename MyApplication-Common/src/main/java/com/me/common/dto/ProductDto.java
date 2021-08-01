@@ -3,10 +3,12 @@ package com.me.common.dto;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.googlecode.jmapper.annotations.JMap;
+import com.me.common.exceptions.CustomMessage;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,13 +29,14 @@ public class ProductDto extends BaseDto implements Serializable {
 	private Long id;
 
 	@JMap
-	@Column(name = "name", columnDefinition = "varchar(100)", nullable = false)
+	@NotBlank(message = CustomMessage.FIELD_NOT_BLANK)
 	private String name;
 
 	@JMap
 	private List<ImageStorageDto> listImageStorage;
 
 	@JMap
+	@NotNull(message = CustomMessage.FIELD_NOT_NULL)
 	private Long brandId;
 
 	private BrandDto brand;
@@ -43,6 +46,7 @@ public class ProductDto extends BaseDto implements Serializable {
 	private String description;
 
 	@JMap
+	@NotNull(message = CustomMessage.FIELD_NOT_NULL)
 	private Long categoryId;
 
 	private CategoryDto category;
@@ -57,6 +61,7 @@ public class ProductDto extends BaseDto implements Serializable {
 	private Boolean isActive;
 
 	@JMap
+	@NotNull(message = CustomMessage.FIELD_NOT_NULL)
 	private Long sellerId;
 
 	private SellerDto seller;
