@@ -17,7 +17,6 @@ import com.me.common.mapper.UserInformationMapper;
 import com.me.common.model.CustomerRegisterRequest;
 import com.me.common.repository.BalanceRepository;
 import com.me.common.repository.CustomerRepository;
-import com.me.common.repository.SellerRepository;
 import com.me.common.repository.UserInformationRepository;
 import com.me.webservice.service.CustomerService;
 
