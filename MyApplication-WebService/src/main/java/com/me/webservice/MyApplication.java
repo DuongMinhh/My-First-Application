@@ -30,6 +30,7 @@ public class MyApplication {
 		System.out.println("Test - merge: Main");
 		
 		System.out.println("Test mergin - in sub branch 2");
+		System.out.println("Test - merge: Main2");
 	}
 
 	@Autowired
