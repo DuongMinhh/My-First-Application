@@ -166,6 +166,10 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<ProductDto> searchProduct(String key) throws CustomException {
 		try {
+			key.trim();
+			if (key.equals("")) {
+				return Collections.emptyList();
+			}
 			List<Product> listProduct = productRepository.searchProduct(key)
 					.orElseGet(() -> Collections.emptyList());
 			return listProduct.stream().map(productMapper::entityToDto).collect(Collectors.toList());

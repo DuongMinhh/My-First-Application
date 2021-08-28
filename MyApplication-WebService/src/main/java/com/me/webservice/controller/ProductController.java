@@ -27,127 +27,114 @@ import com.me.common.exceptions.CustomMessage;
 import com.me.common.model.BasicResponse;
 import com.me.webservice.service.ProductService;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @CrossOrigin
 @RestController
 @RequestMapping("/product")
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class ProductController {
 
 	@Autowired
 	private ProductService productService;
 	
 	@PostMapping
-	public ResponseEntity<?> save(@Valid @RequestBody ProductDto dto) {
+	public ResponseEntity<ProductDto> save(@Valid @RequestBody ProductDto dto) {
 		try {
 			return ResponseEntity.ok(productService.save(dto));
 		} catch (CustomException e) {
-			log.error(e.getMessage());
-			return ResponseEntity.status(e.getCode()).body(new BasicResponse(e));
+			return new ResponseEntity(e, e.getCode());
 		}
 	}
 	
 	@PutMapping(value = "/{id}/add-images", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-	public ResponseEntity<?> addImage(@PathVariable("id") Long productId,
+	public ResponseEntity<ProductDto> addImage(@PathVariable("id") Long productId,
 			@RequestPart("images") List<MultipartFile> images) {
 		try {
 			return ResponseEntity.ok(productService.addImage(productId, images));
 		} catch (CustomException e) {
-			log.error(e.getMessage());
-			return ResponseEntity.status(e.getCode()).body(new BasicResponse(e));
+			return new ResponseEntity(e, e.getCode());
 		}
 	}
 	
 	@PutMapping
-	public ResponseEntity<?> update(@Valid @RequestBody ProductDto dto) {
+	public ResponseEntity<ProductDto> update(@Valid @RequestBody ProductDto dto) {
 		try {
 			return ResponseEntity.ok(productService.update(dto));
 		} catch (CustomException e) {
-			log.error(e.getMessage());
-			return ResponseEntity.status(e.getCode()).body(new BasicResponse(e));
+			return new ResponseEntity(e, e.getCode());
 		}
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteById(@PathVariable("id") Long id) {
+	public ResponseEntity deleteById(@PathVariable("id") Long id) {
 		try {
 			productService.deleteById(id);
 			return ResponseEntity.ok(new BasicResponse(HttpStatus.OK, CustomMessage.ACTION_SUCCESS));
 		} catch (CustomException e) {
-			log.error(e.getMessage());
-			return ResponseEntity.status(e.getCode()).body(new BasicResponse(e));
+			return new ResponseEntity(e, e.getCode());
 		}
 	}
 	
 	@DeleteMapping("/{id}/delete-image/{imageId}")
-	public ResponseEntity<?> deleteImage(@PathVariable("id") Long productId, @PathVariable("imageId") Long imageId) {
+	public ResponseEntity deleteImage(@PathVariable("id") Long productId, @PathVariable("imageId") Long imageId) {
 		try {
 			productService.deleteImage(productId, imageId);
 			return ResponseEntity.ok(new BasicResponse(HttpStatus.OK, CustomMessage.ACTION_SUCCESS));
 		} catch (CustomException e) {
-			log.error(e.getMessage());
-			return ResponseEntity.status(e.getCode()).body(new BasicResponse(e));
+			return new ResponseEntity(e, e.getCode());
 		}
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getById(@PathVariable("id") Long id) {
+	public ResponseEntity<ProductDto> getById(@PathVariable("id") Long id) {
 		try {
 			return ResponseEntity.ok(productService.getById(id));
 		} catch (CustomException e) {
-			log.error(e.getMessage());
-			return ResponseEntity.status(e.getCode()).body(new BasicResponse(e));
+			return new ResponseEntity(e, e.getCode());
 		}
 	}
 	
 	@GetMapping("/by-seller/{sellerId}")
-	public ResponseEntity<?> getBySeller(@PathVariable("sellerId") Long sellerId) {
+	public ResponseEntity<List<ProductDto>> getBySeller(@PathVariable("sellerId") Long sellerId) {
 		try {
 			return ResponseEntity.ok(productService.getBySeller(sellerId));
 		} catch (CustomException e) {
-			log.error(e.getMessage());
-			return ResponseEntity.status(e.getCode()).body(new BasicResponse(e));
+			return new ResponseEntity(e, e.getCode());
 		}
 	}
 	
 	@GetMapping("/by-brand/{brandId}")
-	public ResponseEntity<?> getByBrand(@PathVariable("brandId") Long brandId) {
+	public ResponseEntity<List<ProductDto>> getByBrand(@PathVariable("brandId") Long brandId) {
 		try {
 			return ResponseEntity.ok(productService.getByBrand(brandId));
 		} catch (CustomException e) {
-			log.error(e.getMessage());
-			return ResponseEntity.status(e.getCode()).body(new BasicResponse(e));
+			return new ResponseEntity(e, e.getCode());
 		}
 	}
 	
 	@GetMapping("/by-category/{categoryId}")
-	public ResponseEntity<?> getByCategory(@PathVariable("categoryId") Long categoryId) {
+	public ResponseEntity<List<ProductDto>> getByCategory(@PathVariable("categoryId") Long categoryId) {
 		try {
 			return ResponseEntity.ok(productService.getByCategory(categoryId));
 		} catch (CustomException e) {
-			log.error(e.getMessage());
-			return ResponseEntity.status(e.getCode()).body(new BasicResponse(e));
+			return new ResponseEntity(e, e.getCode());
 		}
 	}
 	
 	@GetMapping("/search")
-	public ResponseEntity<?> getByCategory(@PathParam("key") String key) {
+	public ResponseEntity<List<ProductDto>> getByCategory(@PathParam("key") String key) {
 		try {
 			return ResponseEntity.ok(productService.searchProduct(key));
 		} catch (CustomException e) {
-			log.error(e.getMessage());
-			return ResponseEntity.status(e.getCode()).body(new BasicResponse(e));
+			return new ResponseEntity(e, e.getCode());
 		}
 	}
 	
 	@GetMapping("/")
-	public ResponseEntity<?> getAll() {
+	public ResponseEntity<List<ProductDto>> getAll() {
 		try {
 			return ResponseEntity.ok(productService.getAll());
 		} catch (CustomException e) {
-			log.error(e.getMessage());
-			return ResponseEntity.status(e.getCode()).body(new BasicResponse(e));
+			return new ResponseEntity(e, e.getCode());
 		}
 	}
 	

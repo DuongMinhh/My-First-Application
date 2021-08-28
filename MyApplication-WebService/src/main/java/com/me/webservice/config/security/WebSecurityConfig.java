@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	static final RequestMatcher EXCLUSION_URL_MATCHER;
 	static {
         String[] urls = new String[] {
-        		"/**"
+        		"/authenticate/**"
         };
         LinkedList<RequestMatcher> matcherList = new LinkedList<>();
         for (String url : urls) {

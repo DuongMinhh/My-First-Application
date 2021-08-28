@@ -54,7 +54,7 @@ public class BrandServiceImpl implements BrandService {
 	public BrandDto addImage(Long brandId, List<MultipartFile> images) throws CustomException {
 		try {
 			Brand brandDb = brandRepository.getById(brandId);
-			List<ImageStorage> listImageStorage = new ArrayList<ImageStorage>();
+			List<ImageStorage> listImageStorage = new ArrayList<>();
 
 			images.forEach(img -> {
 				try {

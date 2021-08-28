@@ -13,6 +13,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.me.common.exceptions.CustomMessage;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -32,7 +34,6 @@ public class AuthenTokenFilter extends OncePerRequestFilter {
 		if (WebSecurityConfig.EXCLUSION_URL_MATCHER.matches(request)) {
 			filterChain.doFilter(request, response);
 		}
-
 		// Check jwt
 		else {
 			try {
@@ -50,11 +51,11 @@ public class AuthenTokenFilter extends OncePerRequestFilter {
 					
 					filterChain.doFilter(request, response);
 				} else {
-					response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: Unauthorized");
+					response.sendError(HttpServletResponse.SC_UNAUTHORIZED, CustomMessage.UNAUTHORIZED);
 				}
 			} catch (Exception e) {
 				log.error(e.getMessage());
-				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: Unauthorized");
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, CustomMessage.UNAUTHORIZED);
 			}
 		}
 	}

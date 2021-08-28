@@ -16,13 +16,13 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CustomerRegisterRequest {
 
-	@NotBlank
+	@NotBlank(message = CustomMessage.FIELD_NOT_BLANK)
 	private String firstName;
-	
-	@NotBlank
+	@NotBlank(message = CustomMessage.FIELD_NOT_BLANK)
 	private String lastName;
 	private String address;
 	
+	// Common info
 	@JMap
 	@NotBlank
 	@Size(min = 6, max = 20, message = CustomMessage.FIELD_LEN_INVALID)
@@ -39,5 +39,4 @@ public class CustomerRegisterRequest {
 	@JMap
 	@Size(min = 6, max = 20, message = CustomMessage.FIELD_LEN_INVALID)
 	private String password;
-	
 }

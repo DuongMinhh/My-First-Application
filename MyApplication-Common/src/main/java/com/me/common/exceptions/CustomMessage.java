@@ -26,4 +26,8 @@ public interface CustomMessage {
 	
 	String FIELD_NOT_NULL = "This field is not null";
 	
+	String UNAUTHORIZED = "Unauthorized";
+	
+	String LOGIN_INFO_INVALID = "Login information or password is invalid";
+	
 }

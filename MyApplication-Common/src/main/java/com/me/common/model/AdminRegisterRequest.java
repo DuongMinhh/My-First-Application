@@ -14,12 +14,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class SellerRegisterRequest {
-
+public class AdminRegisterRequest {
+	
 	@NotBlank(message = CustomMessage.FIELD_NOT_BLANK)
-	private String name;
+	private String firstName;
+	@NotBlank(message = CustomMessage.FIELD_NOT_BLANK)
+	private String lastName;
 	private String address;
-	private String introduction;
 	
 	// Common info
 	@JMap

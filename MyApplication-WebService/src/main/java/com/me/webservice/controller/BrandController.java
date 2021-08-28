@@ -26,88 +26,79 @@ import com.me.common.exceptions.CustomMessage;
 import com.me.common.model.BasicResponse;
 import com.me.webservice.service.BrandService;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @CrossOrigin
 @RestController
 @RequestMapping("/brand")
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class BrandController {
 
 	@Autowired
 	private BrandService brandService;
 	
 	@GetMapping
-	public ResponseEntity<?> getAll() {
+	public ResponseEntity<List<BrandDto>> getAll() {
 		try {
 			return ResponseEntity.ok(brandService.getAll());
 		} catch (CustomException e) {
-			log.error(e.getMessage());
-			return new ResponseEntity<>(new BasicResponse(e), e.getCode());
+			return new ResponseEntity(e, e.getCode());
 		}
 	}
 
 	@PostMapping
-	public ResponseEntity<?> save(@Valid @RequestBody BrandDto brand) {
+	public ResponseEntity<BrandDto> save(@Valid @RequestBody BrandDto brand) {
 		try {
 			return ResponseEntity.ok(brandService.save(brand));
 		} catch (CustomException e) {
-			log.error(e.getMessage());
-			return new ResponseEntity<>(new BasicResponse(e), e.getCode());
+			return new ResponseEntity(e, e.getCode());
 		}
 	}
 	
 	@PutMapping
-	public ResponseEntity<?> Update(@Valid @RequestBody BrandDto brand) {
+	public ResponseEntity<BrandDto> Update(@Valid @RequestBody BrandDto brand) {
 		try {
 			return ResponseEntity.ok(brandService.update(brand));
 		} catch (CustomException e) {
-			log.error(e.getMessage());
-			return new ResponseEntity<>(new BasicResponse(e), e.getCode());
+			return new ResponseEntity(e, e.getCode());
 		}
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getById(@PathVariable("id") Long brandId) {
+	public ResponseEntity<BrandDto> getById(@PathVariable("id") Long brandId) {
 		try {
 			return ResponseEntity.ok(brandService.getById(brandId));
 		} catch (CustomException e) {
-			log.error(e.getMessage());
-			return new ResponseEntity<>(new BasicResponse(e), e.getCode());
+			return new ResponseEntity(e, e.getCode());
 		}
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteById(@PathVariable("id") Long brandId) {
+	public ResponseEntity deleteById(@PathVariable("id") Long brandId) {
 		try {
 			brandService.deleteById(brandId);
 			return ResponseEntity.ok(new BasicResponse(HttpStatus.OK, CustomMessage.ACTION_SUCCESS));
 		} catch (CustomException e) {
-			log.error(e.getMessage());
-			return new ResponseEntity<>(new BasicResponse(e), e.getCode());
+			return new ResponseEntity(e, e.getCode());
 		}
 	}
 	
 
 	@PutMapping(value = "/{id}/add-images", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-	public ResponseEntity<?> addImage(@PathVariable("id") Long brandId,
+	public ResponseEntity<BrandDto> addImage(@PathVariable("id") Long brandId,
 			@RequestPart("images") List<MultipartFile> images) {
 		try {
 			return ResponseEntity.ok(brandService.addImage(brandId, images));
 		} catch (CustomException e) {
-			log.error(e.getMessage());
-			return new ResponseEntity<>(new BasicResponse(e), e.getCode());
+			return new ResponseEntity(e, e.getCode());
 		}
 	}
 	
 	@DeleteMapping("/{id}/delete-image/{imageId}")
-	public ResponseEntity<?> deleteImage(@PathVariable("id") Long brandId, @PathVariable("imageId") Long imageId) {
+	public ResponseEntity deleteImage(@PathVariable("id") Long brandId, @PathVariable("imageId") Long imageId) {
 		try {
 			brandService.deleteImage(brandId, imageId);
 			return ResponseEntity.ok(new BasicResponse(HttpStatus.OK, CustomMessage.ACTION_SUCCESS));
 		} catch (CustomException e) {
-			log.error(e.getMessage());
-			return new ResponseEntity<>(new BasicResponse(e), e.getCode());
+			return new ResponseEntity(e, e.getCode());
 		}
 	}
 
