@@ -25,12 +25,6 @@ public class MyApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MyApplication.class, args);
-		
-		System.out.println("Test mergin - in sub branch");
-		System.out.println("Test - merge: Main");
-		
-		System.out.println("Test mergin - in sub branch 2");
-		System.out.println("Test - merge: Main2");
 	}
 
 	@Autowired
